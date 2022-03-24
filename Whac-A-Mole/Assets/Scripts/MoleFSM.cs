@@ -45,6 +45,9 @@ public class MoleFSM : MonoBehaviour
         get => moleType;
     }
 
+    [field:SerializeField]
+    public int MoleIndex { private set; get; }
+
     private void Awake()
     {
         movement3D = GetComponent<Movement3D>();

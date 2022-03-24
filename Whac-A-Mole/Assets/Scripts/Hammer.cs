@@ -13,6 +13,8 @@ public class Hammer : MonoBehaviour
     [SerializeField]
     private AudioClip[] audioClips;
     [SerializeField]
+    private MoleHitTextViewer[] moleHitTextViewer;
+    [SerializeField]
     private GameController gameController;
     [SerializeField]
     private ObjectDetector objectDetector;
@@ -74,14 +76,17 @@ public class Hammer : MonoBehaviour
         if(mole.MoleType == MoleType.Normal)
         {
             gameController.Score += 50;
+            moleHitTextViewer[mole.MoleIndex].OnHit("Score +50", Color.white);
         }
         else if(mole.MoleType == MoleType.Red)
         {
             gameController.Score -= 300;
+            moleHitTextViewer[mole.MoleIndex].OnHit("Score -300", Color.red);
         }
         else if(mole.MoleType == MoleType.Blue)
         {
             gameController.CurrentTime += 3;
+            moleHitTextViewer[mole.MoleIndex].OnHit("Score +3", Color.blue);
         }
         PlaySound((int)mole.MoleType);
     }
