@@ -11,6 +11,8 @@ public class Hammer : MonoBehaviour
     [SerializeField]
     private GameObject moleHitEffectPrefab;
     [SerializeField]
+    private GameController gameController;
+    [SerializeField]
     private ObjectDetector objectDetector;
     private Movement3D movement3D;
 
@@ -38,6 +40,8 @@ public class Hammer : MonoBehaviour
             ParticleSystem.MainModule main = clone.GetComponent<ParticleSystem>().main;
             //파티클 시스템의 main은 변수로 가져와야 캐싱이 가능
             main.startColor = mole.GetComponent<MeshRenderer>().material.color;
+
+            gameController.Score += 50;
 
             StartCoroutine("MoveUp");
         }
