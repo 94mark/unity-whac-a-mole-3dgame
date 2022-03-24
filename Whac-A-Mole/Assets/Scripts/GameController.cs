@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private MoleSpawner moleSpawner;
     private int score;
+    private float currentTime;
 
     public int Score
     {
@@ -19,7 +20,13 @@ public class GameController : MonoBehaviour
     //자동 구현 프로퍼티를 인스펙터 뷰에서 보이게 할 때 사용
     [field:SerializeField]
     public float MaxTime { private set; get; }
-    public float CurrentTime { private set; get; }
+    //public float CurrentTime { private set; get; }
+
+    public float CurrentTime
+    {
+        set => currentTime = Mathf.Clamp(value, 0, MaxTime);
+        get => currentTime;
+    }
 
     private void Start()
     {
