@@ -9,7 +9,8 @@ public class MoleSpawner : MonoBehaviour
     [SerializeField]
     private float spawnTime;
 
-    public void Start()
+    //카운트다운 완료 이후 두더지 생성
+    public void Setup()
     {
         StartCoroutine("SpawnMole");
     }
