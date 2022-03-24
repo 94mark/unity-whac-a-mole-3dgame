@@ -9,6 +9,8 @@ public class Hammer : MonoBehaviour
     [SerializeField]
     private float minY;
     [SerializeField]
+    private GameObject moleHitEffectPrefab;
+    [SerializeField]
     private ObjectDetector objectDetector;
     private Movement3D movement3D;
 
@@ -29,6 +31,13 @@ public class Hammer : MonoBehaviour
             transform.position = new Vector3(target.position.x, minY, target.position.z);
 
             mole.ChangeState(MoleState.UnderGround);
+
+            ShakeCamera.Instance.OnShakeCamera(0.1f, 0.1f);
+
+            GameObject clone = Instantiate(moleHitEffectPrefab, transform.position, Quaternion.identity);
+            ParticleSystem.MainModule main = clone.GetComponent<ParticleSystem>().main;
+            //파티클 시스템의 main은 변수로 가져와야 캐싱이 가능
+            main.startColor = mole.GetComponent<MeshRenderer>().material.color;
 
             StartCoroutine("MoveUp");
         }
