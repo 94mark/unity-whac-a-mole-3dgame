@@ -9,6 +9,8 @@ public enum MoleType { Normal = 0, Red, Blue }
 public class MoleFSM : MonoBehaviour
 {
     [SerializeField]
+    private GameController gameController;
+    [SerializeField]
     private float waitTimeOnGround;
     [SerializeField]
     private float limitMinY;
@@ -105,10 +107,18 @@ public class MoleFSM : MonoBehaviour
         {
             if( transform.position.y <= limitMinY )
             {
-                ChangeState(MoleState.UnderGround);
+                //ChangeState(MoleState.UnderGround);
+                break;
             }
 
             yield return null;
         }
+
+        if( moleType == MoleType.Normal)
+        {
+            gameController.Combo = 0;
+        }
+
+        ChangeState(MoleState.UnderGround);
     }
 }
