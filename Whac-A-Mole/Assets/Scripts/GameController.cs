@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -28,9 +29,19 @@ public class GameController : MonoBehaviour
             {
                 moleSpawner.MaxSpawnMole = 1 + (combo + 10) / 20;
             }
+
+            if( combo > MaxCombo )
+            {
+                MaxCombo = combo;
+            }
         }
         get => combo;
     }
+
+    public int MaxCombo { private set; get; }
+    public int NormalMoleHitCount { set; get; }
+    public int RedMoleHitCount { set; get; }
+    public int BlueMoleHitCount { set; get; }
 
     //자동 구현 프로퍼티를 인스펙터 뷰에서 보이게 할 때 사용
     [field:SerializeField]
@@ -65,6 +76,19 @@ public class GameController : MonoBehaviour
 
             yield return null;
         }
+
+        GameOver();
+    }
+
+    private void GameOver()
+    {
+        PlayerPrefs.SetInt("CurrentScore", Score);
+        PlayerPrefs.SetInt("CurrentMaxCombo", MaxCombo);
+        PlayerPrefs.SetInt("CurrentNormalMoleHitCount", NormalMoleHitCount);
+        PlayerPrefs.SetInt("CurrentRedMoleHitCount", RedMoleHitCount);
+        PlayerPrefs.SetInt("CurrentBlueMoleHitCount", BlueMoleHitCount);
+
+        SceneManager.LoadScene("GameOver");
     }
 }
 

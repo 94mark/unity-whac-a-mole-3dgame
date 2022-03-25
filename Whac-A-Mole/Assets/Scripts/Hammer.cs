@@ -75,6 +75,7 @@ public class Hammer : MonoBehaviour
     {
         if(mole.MoleType == MoleType.Normal)
         {
+            gameController.NormalMoleHitCount++;
             gameController.Combo++;
             //gameController.Score += 50;
             float scoreMultiple = 1 + gameController.Combo / 10 * 0.5f;
@@ -85,12 +86,14 @@ public class Hammer : MonoBehaviour
         }
         else if(mole.MoleType == MoleType.Red)
         {
+            gameController.RedMoleHitCount++;
             gameController.Combo = 0;
             gameController.Score -= 300;
             moleHitTextViewer[mole.MoleIndex].OnHit("Score -300", Color.red);
         }
         else if(mole.MoleType == MoleType.Blue)
         {
+            gameController.BlueMoleHitCount++;
             gameController.Combo++;
             gameController.CurrentTime += 3;
             moleHitTextViewer[mole.MoleIndex].OnHit("Score +3", Color.blue);
