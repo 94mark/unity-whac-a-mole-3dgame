@@ -2599,7 +2599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countDown: {fileID: 151584716}
   moleSpawner: {fileID: 1821211907}
-  <MaxTime>k__BackingField: 5
+  <MaxTime>k__BackingField: 10
 --- !u!4 &1070658642
 Transform:
   m_ObjectHideFlags: 0
