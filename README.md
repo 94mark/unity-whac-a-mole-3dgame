@@ -3,18 +3,22 @@
 
 https://user-images.githubusercontent.com/90877724/160127927-a1aa3a07-db2c-42d7-a422-496f01520453.mp4
 
-## 프로젝트 개요
-### 개발 인원/기간 및 포지션
+## 1. 프로젝트 개요
+### 1-1. 개발 인원/기간 및 포지션
 - 1인, 총 3일 소요
-### 개발 환경
+### 1-2. 개발 환경
 - Unity 2020.3.16f
 - 언어 : C#
-- OS : Window 10		
+- OS : Window 10
+
+## 2. 핵심 구현 내용
+### 2-1. 타겟(두더지) 행동 제어
+### 2-2. 타겟 공격
+### 2-3. 점수 출력 및 스테이지 설정
+### 2-4. 등장 확률에 따른 타겟 추가
+### 2-5. 콤보 시스템 구현
+### 2-6. 씬 추가 및 정보 저장
+
+## 3. 문제 해결 내용
 
 
-
-### GameController Class -> CountDown.StartCountDown();
-### CountDown Class -> OnCountDown();
-### CountDown Class -> endOfCountDown.Invoke();
-### GameController Class -> GameStart();
-### MoleSpawner Class -> Setup();
