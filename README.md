@@ -64,8 +64,52 @@ private void OnHit(Transform target)
         transform.position = startPosition;
     }
 ```
-- 피격 효과 파티클 생성, ParticleSystem은 main으로 캐싱해야 
+- 피격 효과 파티클 생성, ParticleSystem은 main으로 캐싱
 ### 2-3. 점수 출력 및 스테이지 설정
+
+![20220423_171715](https://user-images.githubusercontent.com/90877724/164886491-dfe95923-76f7-431f-9c23-10f3eca7cede.png)
+
+
+- OnHit() 함수 호출 시 Score UI text 출력(점수 증가)
+- 스테이지 시작 전 CountDown 이벤트 함수 구현, MoleSpawn 호출 전 완료하기 위해 GameController의 SetUp() 메소드 사용
+```c#
+private IEnumerator OnCountDown(UnityAction action, int start, int end)
+    {
+        endOfCountDown.AddListener(action);
+
+        while( start > end -1 )
+        {
+            audioSource.Play();
+            textCountDown.text = start.ToString();
+            yield return StartCoroutine("OnFontAnimation");
+            start--;
+        }
+
+        endOfCountDown.Invoke();
+        endOfCountDown.RemoveListener(action);
+        gameObject.SetActive(false);
+    }
+```
+- 폰트 크기가 시간에 따라 변화되는 애니메이션 효과 구현, Lerp() 함수로 자연스러운 전환
+```c#
+ private IEnumerator OnFontAnimation()
+    {
+        float percent = 0;
+
+        while ( percent < 1 )
+        {
+            percent += Time.deltaTime;
+
+            textCountDown.fontSize = Mathf.Lerp(maxFontSize, minFontSize, percent);
+
+            yield return null;
+        }
+    }
+```
+- 슬라이더 bar를 사용하여 남은 시간 count
+```c#
+sliderPlayTime.value = gameController.CurrentTime / gameController.MaxTime;
+```
 ### 2-4. 등장 확률에 따른 타겟 추가
 ### 2-5. 콤보 시스템 구현
 ### 2-6. 씬 추가 및 정보 저장
