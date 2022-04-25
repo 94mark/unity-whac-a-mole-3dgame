@@ -195,6 +195,12 @@ float scoreMultiple = 1 + gameController.Combo / 10 * 0.5f;
 ```
 
 ### 2-6. 씬 추가 및 정보 저장
+- PlayerPref() 메서드를 사용해 Score, Combo, Rank, 색상별 타격 횟수 등의 정보 저장 및 출력
+- 출력 화면 UI 구성 시 Grid Layout Group, Conteont Size Fitter, Preferred Size 컴포넌트를 사용해 UI 세팅
+- [RankSystem](https://github.com/94mark/unity-whac-a-mole-3dgame/blob/main/Whac-A-Mole/Assets/Scripts/RankSystem.cs) 구현
+
+![20220425_122043](https://user-images.githubusercontent.com/90877724/165015496-690b400c-59a0-488e-932a-610bee8f4f77.png)
+
 
 ## 3. 문제 해결 내용
 ### 3-1. MoleSpawner 호출 시 null 에러 발생
