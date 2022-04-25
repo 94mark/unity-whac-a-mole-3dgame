@@ -111,6 +111,45 @@ private IEnumerator OnCountDown(UnityAction action, int start, int end)
 sliderPlayTime.value = gameController.CurrentTime / gameController.MaxTime;
 ```
 ### 2-4. 등장 확률에 따른 타겟 추가
+- 색상별로 85%, 10% ,5% 확률로 타겟 생성, 타겟 종류가 늘어나도 사용할 수 있는 cumulative 변수를 사용한 메서드 작성
+```c#
+ private MoleType SpawnMoleType()
+    {
+        int percent = Random.Range(0, 100);
+        float cumulative = 0;
+
+        for(int i = 0; i < spawnPercents.Length; ++i)
+        {
+            cumulative += spawnPercents[i];
+
+            if(percent < cumulative)
+            {
+                return (MoleType)i;
+            }
+        }
+
+        return MoleType.Normal;
+    }
+```
+- 타격된 두더지 타겟 별로 다른 점수 텍스트 출력, Score Text UI 애니메이션 설정
+- 타격 시 점수 텍스트 출력(Vector2.up 방향, 알파 값을 1 -> 0으로 감소시켜 투명도 변환)
+```c#
+private IEnumerator OnAnimation(Color color)
+    {
+        rectHit.anchoredPosition = defaultPosition;
+
+        while ( color.a > 0)
+        {
+            rectHit.anchoredPosition += Vector2.up * moveSpeed * Time.deltaTime;
+            color.a -= Time.deltaTime;
+            textHit.color = color;
+
+            yield return null;
+        }
+
+        gameObject.SetActive(false);
+    }
+```
 ### 2-5. 콤보 시스템 구현
 ### 2-6. 씬 추가 및 정보 저장
 
