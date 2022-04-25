@@ -151,13 +151,85 @@ private IEnumerator OnAnimation(Color color)
     }
 ```
 ### 2-5. 콤보 시스템 구현
+- 기본 x 1 에 10콤보 당 0.5씩 더해지는 콤보 계산
+![20220425_110748](https://user-images.githubusercontent.com/90877724/165009176-c7f4f74b-859c-4dfc-9528-1b260f318d0b.png)
+```c#
+float scoreMultiple = 1 + gameController.Combo / 10 * 0.5f;
+            int getScore = (int)(scoreMultiple * 50);
+```
+
+- 10콤보 이상 시 두더지 타겟 2마리 생성
+```c#
+ private IEnumerator SpanwMultiMoles()
+    {
+        int[] indexs = RandomNumerics(moles.Length, moles.Length);
+        int currentSpawnMole = 0;
+        int curretIndex = 0;
+
+        while (curretIndex < indexs.Length)
+        {
+            if (moles[indexs[curretIndex]].MoleState == MoleState.UnderGround)
+            {
+                moles[indexs[curretIndex]].MoleType = SpawnMoleType();
+                moles[indexs[curretIndex]].ChangeState(MoleState.MoveUp);
+                currentSpawnMole++;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            if (currentSpawnMole == MaxSpawnMole)
+            {
+                break;
+            }
+
+            curretIndex++;
+            yield return null;
+        }
+    }
+```
+```c#
+ if( combo <= 70 )
+     {
+     moleSpawner.MaxSpawnMole = 1 + (combo + 10) / 20;
+     }
+```
+
 ### 2-6. 씬 추가 및 정보 저장
 
 ## 3. 문제 해결 내용
 ### 3-1. MoleSpawner 호출 시 null 에러 발생
 - Mole.Awake()에서 Movement3D 컴포넌트 정보를 얻어오기 전에 MoleSpawner의 SpanwMole()이 호출되서 최초 null 에러 발생
 - MoleSpawner에서 Awake()가 아닌 Start() 함수를 사용해 우선순위 지정
+### 3-2. 두더지 타겟의  생성을 위한 난수 생성 메서드 구현
+- 0 ~ maxCount까지 숫자 중 n개의 겹치지 않는 난수 생성
+- maxCount 개수만큼의 방을 가지는 배열 생성(int[] defaults)
+- 배열에 0부터 maxCount - 1까지 순서대로 숫자 저장 후 n 크기만큼 반복문 실행
+
+![20220425_112851](https://user-images.githubusercontent.com/90877724/165010850-0fe7f072-1631-42c7-9efc-17588d6a2e76.png)
+
+```c#
+private int[] RandomNumerics(int maxCount, int n)
+    {
+        int[] defaults = new int[maxCount];
+        int[] results = new int[n];
+
+        for( int i = 0; i < maxCount; i++ )
+        {
+            defaults[i] = i;
+        }
+
+        for( int i = 0; i < n; i++ )
+        {
+            int index = Random.Range(0, maxCount);
+
+            results[i] = defaults[index];
+            defaults[index] = defaults[maxCount - 1];
+
+            maxCount--;
+        }
+
+        return results;
+    }
+```
 
 
-```
-```
